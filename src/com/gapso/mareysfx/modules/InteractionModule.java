@@ -25,9 +25,11 @@ public class InteractionModule {
     }
 
     private void bindEvents() {
-        _chart.getCanvas().setOnMousePressed(evt -> onTouch(evt));
-        _chart.getCanvas().setOnMouseDragged(evt -> onDrag(evt));
-        _chart.getCanvas().setOnScroll(evt -> onMouseWheel(evt));
+        _chart.getCanvas().setOnMousePressed(this::onTouch);
+        _chart.getCanvas().setOnMouseDragged(this::onDrag);
+        _chart.getCanvas().setOnScroll(this::onMouseWheel);
+
+        _chart.getCanvas().setOnMouseMoved(this::onMouseMove);
     }
 
     private void onTouch(MouseEvent evt) {
@@ -36,6 +38,10 @@ public class InteractionModule {
         this._initialTranslateX = this._chart.getCamera().getTranslateX();
         this._initialTranslateY = this._chart.getCamera().getTranslateY();
 
+    }
+
+    private void onMouseMove(MouseEvent mouseEvent) {
+        System.out.println(String.format("%f %f", mouseEvent.getX(), mouseEvent.getY()));
     }
 
     private void onDrag(MouseEvent evt) {

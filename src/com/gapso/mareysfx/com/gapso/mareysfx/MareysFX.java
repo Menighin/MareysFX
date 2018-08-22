@@ -1,6 +1,7 @@
 package com.gapso.mareysfx.com.gapso.mareysfx;
 
 import com.gapso.mareysfx.entities.MareysStation;
+import com.gapso.mareysfx.entities.MareysTrain;
 import com.gapso.mareysfx.entities.TimeWindow;
 import com.gapso.mareysfx.interfaces.IChart;
 import com.gapso.mareysfx.modules.*;
@@ -16,8 +17,10 @@ public class MareysFX extends Pane implements IChart {
     private MareysAxis _mareysAxis;
     private InteractionModule _interactionModule;
     private CameraModule _cameraModule;
+    private MareysTrainModule _mareysTrainModule;
     private ArrayList<MareysStation> _stations;
     private TimeWindow _timeWindow;
+    private ArrayList<MareysTrain> _trains;
 
     public MareysFX(int width, int height) {
         this._canvasRenderer = new CanvasRenderer(this, width, height);
@@ -26,6 +29,7 @@ public class MareysFX extends Pane implements IChart {
 
         this._cameraModule = new CameraModule();
         this._interactionModule = new InteractionModule(this);
+        this._mareysTrainModule = new MareysTrainModule(this);
 
         getChildren().add(_canvasRenderer.getcanvas());
     }
@@ -38,6 +42,14 @@ public class MareysFX extends Pane implements IChart {
         ArrayList<MareysStation> stationsSorted = new ArrayList<>(stations);
         stationsSorted.sort((o1, o2) -> (int) (o1.getDistance() - o2.getDistance()));
         this._stations = stationsSorted;
+    }
+
+    public ArrayList<MareysTrain> getTrains() {
+        return _trains;
+    }
+
+    public void setTrains(ArrayList<MareysTrain> trains) {
+        this._trains = trains;
     }
 
     public TimeWindow getTimeWindow() {
@@ -67,6 +79,7 @@ public class MareysFX extends Pane implements IChart {
     @Override
     public void draw() {
         _mareysAxis.draw();
+        _mareysTrainModule.draw();
     }
 
     @Override

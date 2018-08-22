@@ -2,8 +2,10 @@ package com.gapso.mareysfx.entities
 
 import java.time.LocalDateTime
 
-class TrainSchedule {
+class TrainSchedule (var time: LocalDateTime, var distance: Double) {
 
-    var time: LocalDateTime? = null
-    var distance: Double = .0
+    override fun toString(): String {
+        return "(${time.hour}:${time.minute}, ${distance})"
+    }
+
 }
